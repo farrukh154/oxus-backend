@@ -1,0 +1,80 @@
+<html>
+<style>
+.td {
+  border: 1px solid
+}
+.cell {
+  text-align: center;
+  padding: 10px 0 10px 0;
+}
+.table {
+  border-collapse: collapse;
+}
+</style>
+
+{% load static %}
+<img src="{% static 'logo.png' %}" style="width: 200px" alt="">
+
+<div style="text-align: center;">
+  <h2>СУПОРИШ</h2>
+  <h3>барои пешниҳоди қарз</h3>
+  {{static}}
+</div>
+
+<div>Сохтор: {{credit.branch.description}} </div>
+<br />
+
+<table style="width:100%" class="table">
+  <tr>
+    <td class="cell td">Шартнома №:</td>
+    {% comment %} TODO: почему так? {% endcomment %}
+    <td class="cell td" colspan="3">{{ credit.credit_ID }}</td>
+  </tr>
+  <tr>
+    <td class="cell td">Ному Насаби Мизоҷ:</td>
+    <td class="cell td" colspan="3">{{ credit.customer.name }}</td>
+  </tr>
+  <tr>
+    <td class="cell td">Маблағи қарз:</td>
+    <td class="cell td">{{ credit.approve_amount }}</td>
+    <td class="cell td">бо навиштаҷот:</td>
+    <td class="cell td">{{ amount_str }} сомони</td>
+  </tr>
+  <tr>
+    <td class="cell td">Комиссия (бо %)</td>
+    <td class="cell td">{{ credit.approve_issue_fee }}%</td>
+    <td class="cell td">бо навиштаҷот:</td>
+    <td class="cell td">{{ interest_str }}</td>
+  </tr>
+</table>
+<br />
+
+<table style="width:100%">
+  <tr>
+    <td class="cell">
+      Шахси Масъул
+    </td>
+    <td class="cell">
+      __________________________
+    </td>
+    <td class="cell">
+      ______
+    </td>
+    <td class="cell">
+      ____/_____/_____с.
+    </td>
+  </tr>
+  <tr>
+    <td>
+    </td>
+    <td class="cell">
+      Ному насаб, номи падар
+    </td>
+    <td class="cell">
+      Имзо
+    </td>
+    <td class="cell">
+      Сана
+    </td>
+  </tr>
+<table style="width:100%">

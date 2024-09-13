@@ -1,0 +1,133 @@
+<html>
+<style>
+td {
+  border: 0.85px solid black;
+  padding:5px 0px 5px 0px;
+}
+h4 {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  font-size: 10px;
+  text-align: center;
+}
+
+.bggray {
+  background-color: #d9d9d9;
+  font-size: 9px;
+}
+.cell {
+  text-align: center;
+  font-size: 9px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+</style>
+
+
+{% load static %}
+<div style="margin-top: -40px;">
+<img src="{% static 'logo.png' %}" style="width: 200px"  alt="">
+</div>
+
+<div style="text-align: center; font-size: 11px;">
+  <h3>Қарор оид ба аризаи  № {{ credit.id }}</h3>
+</div>
+
+
+<table>
+
+  <tr>
+      <td colspan="2" class="bggray cell">Санаи қарор</td>
+      <td colspan="6" class="cell">{{ credit.underwriter_status_change_date|date:"d.m.Y" }}</td>
+  </tr>
+  <tr>
+      <td colspan="2" class="bggray cell">Ному насаби Аризадиҳанда</td>
+      <td colspan="6" class="cell">{{ credit.customer.name }}</td>
+  </tr>
+  <tr><td colspan="8" style="border-bottom: #fcfcfc 0.7px solid;"><h4>1. Тасдиқ гардид</h4></td></tr>
+</table>
+
+  <table>
+  <tr>
+      <td colspan="2" class="bggray cell">Маблағи қарз</td>
+      <td colspan="2"  class="cell">{{ credit.approve_amount }}</td>
+      <td colspan="2" class="bggray cell">Маблағ бо ҳарф</td>
+      <td colspan="2"   class="cell">{{ amount_str }}</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="bggray cell">Муҳлати қарз (моҳ)</td>
+    <td colspan="1" class="cell">{{ credit.approve_installment }}</td>
+    <td colspan="2" class="bggray cell">Асъори қарз</td>
+    <td colspan="1" class="cell">{{ credit.approve_currency_new.description }}</td>
+    <td colspan="1" class="bggray cell">Меъёри фоиз</td>
+    <td colspan="1" class="cell">{{ credit.approve_interest }}%</td>
+    
+  </tr>
+  <tr>
+    <td colspan="2" class="bggray cell">Давраи имтиёзӣ (моҳ)</td>
+    <td colspan="6" class="cell">{{ credit.approve_grace_period }}</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="bggray cell">Маблағи пардохти ҳармоҳа</td>
+    <td colspan="2" class="cell">{{ monthly_payment }}</td>
+    <td colspan="2" class="bggray cell">Ҳаққи хизматрасонӣ</td>
+    <td colspan="2" class="cell">{{ credit.approve_issue_fee }}%</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="bggray cell">Мақсади қарз (зергуруҳи мақсад)</td>
+    <td colspan="6" class="cell">{{ credit.credit_purpose }}</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="bggray cell">Категория ва намуди фаъолият</td>
+    <td colspan="3" class="cell">{{ credit.economic_activity }}</td>
+    <td colspan="3" class="cell">{{ credit.economic_activity_type }}</td>
+
+  </tr>
+  <tr>
+    <td colspan="2" class="bggray cell">Маҳсулоти қарзӣ</td>
+    <td colspan="6" class="cell">{{ credit.credit_product }}</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="bggray cell">Рейтинги скоринг (ОКСУС)</td>
+    <td colspan="2" class="cell">{{ credit.get_rating_internal_display|default:"-" }}</td>
+    <td colspan="2" class="bggray cell">Рейтинги скоринг (беруна)</td>
+    <td colspan="2" class="cell">{{ credit.get_rating_external_display|default:"-" }}</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="bggray cell">Фоидаи софи моҳона</td>
+    <td colspan="2" class="bggray cell">{{ monthly_profit }}</td>
+    <td colspan="2" class="bggray cell">Коэффисиенти карзадокунӣ</td>
+    <td colspan="2" class="bggray cell"> {{ coefficient }} </td>
+  </tr>
+  <tr><td colspan="8"  style="border-bottom: #fcfcfc 0.7px solid;"><h4>2. Шартҳои иловагӣ</h4></td></tr>
+  </table>
+
+<table>
+  <tr>
+    <td colspan="2" style="height: 75px;" class="bggray cell">Қарз пас аз иҷрои шартҳои зерин дода мешавад</td>
+    <td colspan="6" style="height: 75px;" class="cell">{{ credit.get_approve_condition_display|default:"-" }}</td>
+  </tr>
+  <tr><td colspan="8"  style="border-bottom: #fcfcfc 0.7px solid;"><h4>3. Рад карда шуд</h4></td></tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" style="height: 75px;" class="bggray cell">Пешниҳоди қарз бо сабабҳои зерин рад карда шуд </td>
+    <td colspan="6" style="height: 75px;" class="cell">{{ credit.rejection_reason|default:"" }}</td>
+  </tr>
+</table>
+
+<table style="margin-top: 15px;">
+  <tr>
+    <td class="bggray cell">Таҳлилгари Қарзӣ</td>
+    <td class="cell"><u>{{ credit.underwriter_status_change_by }}</u><br>Ному насаб</td>
+    <td class="cell">
+      {% if credit.underwriter_status_change_by.user_signature %}
+        <img src="{{ credit.underwriter_status_change_by.user_signature.url }}" style="height: 80px" />
+      {% endif %}
+      <br>Имзо</td>
+    <td class="cell"><u>{{ current_date }}</u><br>Таърих</td>
+    </tr>
+</table>

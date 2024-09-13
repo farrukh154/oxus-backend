@@ -1,0 +1,26 @@
+{% extends "admin/base_site.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="shortcut icon" href="{% static 'img/logo-pg-mini.png' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom_admin.css' %}"/>
+{% endblock %}
+
+{% block userlinks %}
+    <a href="{% url 'change_lang' 'en' %}">
+        <img class="i18n_flag" style="width: 16px;" src="{% static 'img/flag-usa-16.png' %}"/>
+    </a> /
+    <a href="{% url 'change_lang' 'ru' %}">
+        <img class="i18n_flag" style="width: 16px;" src="{% static 'img/flag-ru-16.png' %}"/>
+    </a> /
+    <a href="{% url 'change_lang' 'tg' %}">
+        <img class="i18n_flag" style="width: 16px;" src="{% static 'img/flag-tj-16.png' %}"/>
+    </a> /
+    {% if user.has_usable_password %}
+        <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
+    {% endif %}
+    <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
+{% endblock %}

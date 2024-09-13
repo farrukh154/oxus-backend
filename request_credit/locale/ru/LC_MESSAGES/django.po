@@ -1,0 +1,328 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-01 17:33+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\apps.py:7 .\models\r_credit\model.py:23
+msgid "request credit"
+msgstr "заявка на кредит"
+
+#: .\models\client_decision\model.py:10
+msgid "Client decision"
+msgstr ""
+
+#: .\models\client_decision\model.py:11
+msgid "Client decisions"
+msgstr ""
+
+#: .\models\client_decision\model.py:41
+msgid "customer response/comments"
+msgstr ""
+
+#: .\models\client_decision\model.py:48
+msgid "employee comments"
+msgstr ""
+
+#: .\models\credit_purpose\model.py:8
+msgid "Credit purpose"
+msgstr ""
+
+#: .\models\credit_purpose\model.py:9
+msgid "Credit purposes"
+msgstr ""
+
+#: .\models\credit_purpose\model.py:13 .\models\economic_activity\model.py:14
+#: .\models\economic_activity_type\model.py:15 .\models\r_status\model.py:22
+#: .\models\rejection_reason\model.py:13
+msgid "name"
+msgstr "имя"
+
+#: .\models\credit_purpose\model.py:18
+msgid "code"
+msgstr ""
+
+#: .\models\economic_activity\model.py:9
+msgid "Economic activity"
+msgstr ""
+
+#: .\models\economic_activity\model.py:10
+msgid "Economic activities"
+msgstr ""
+
+#: .\models\economic_activity_type\model.py:10
+msgid "Economic activity type"
+msgstr ""
+
+#: .\models\economic_activity_type\model.py:11
+msgid "Economic activities types"
+msgstr ""
+
+#: .\models\r_credit\model.py:24
+msgid "request credits"
+msgstr "заявки на кредит"
+
+#: .\models\r_credit\model.py:29
+msgid "credit account"
+msgstr "кредитный счет"
+
+#: .\models\r_credit\model.py:38 .\models\r_credit\serializer.py:11
+msgid "status"
+msgstr "статус"
+
+#: .\models\r_credit\model.py:41
+msgid "status change date"
+msgstr "дата изменения статуса"
+
+#: .\models\r_credit\model.py:49 .\models\r_credit\serializer.py:49
+msgid "status change by"
+msgstr "изменение статуса"
+
+#: .\models\r_credit\model.py:52 .\models\r_credit\serializer.py:15
+msgid "branch"
+msgstr "филиал"
+
+#: .\models\r_credit\model.py:54
+msgid "family number"
+msgstr "члены семьи"
+
+#: .\models\r_credit\model.py:56
+msgid "family number has income"
+msgstr "члены семьи с доходом"
+
+#: .\models\r_credit\model.py:60
+msgid "current debt"
+msgstr "текущий долг"
+
+#: .\models\r_credit\model.py:66
+msgid "current debt name"
+msgstr "текущее название долга"
+
+#: .\models\r_credit\model.py:70
+msgid "acted"
+msgstr "acted"
+
+#: .\models\r_credit\model.py:76
+msgid "number of full-time employees?"
+msgstr "количество штатных сотрудников?"
+
+#: .\models\r_credit\model.py:78
+msgid "creation of new jobs"
+msgstr "создание новых рабочих мест"
+
+#: .\models\r_credit\model.py:82
+msgid "source of information"
+msgstr "источник информации"
+
+#: .\models\r_credit\model.py:102 .\models\r_credit\serializer.py:37
+msgid "economic activity"
+msgstr "экономическая активность"
+
+#: .\models\r_credit\model.py:109 .\models\r_credit\serializer.py:41
+msgid "economic activity type"
+msgstr "вид экономической деятельности"
+
+#: .\models\r_credit\model.py:112
+msgid "work experience"
+msgstr "опыт работы"
+
+#: .\models\r_credit\model.py:114
+msgid "request amount"
+msgstr "сумма запроса"
+
+#: .\models\r_credit\model.py:121 .\models\r_credit\serializer.py:19
+msgid "currency"
+msgstr "валюта"
+
+#: .\models\r_credit\model.py:126
+msgid "request installment"
+msgstr "запрашиваемый срок"
+
+#: .\models\r_credit\model.py:133 .\models\r_credit\serializer.py:45
+msgid "credit purpose"
+msgstr "цель кредита"
+
+#: .\models\r_credit\model.py:136
+msgid "request grace period"
+msgstr "запросить льготный период"
+
+#: .\models\r_credit\model.py:140
+msgid "investment sector"
+msgstr "инвестиционный сектор"
+
+#: .\models\r_credit\model.py:156
+msgid "address of location of activity"
+msgstr "адрес места деятельности"
+
+#: .\models\r_credit\model.py:163
+msgid "education"
+msgstr "образование"
+
+#: .\models\r_credit\model.py:175
+msgid "education info"
+msgstr "информация об образовании"
+
+#: .\models\r_credit\model.py:180
+msgid "monthly income"
+msgstr "Ежемесячный доход"
+
+#: .\models\r_credit\model.py:182
+msgid "monthly income info"
+msgstr "информация о ежемесячном доходе"
+
+#: .\models\r_credit\model.py:186
+msgid "monthly household expenses"
+msgstr "ежемесячные расходы на домашнее хозяйство"
+
+#: .\models\r_credit\model.py:190
+msgid "monthly household expenses info"
+msgstr "ежемесячные расходы домохозяйства информация"
+
+#: .\models\r_credit\model.py:196
+msgid "monthly payment loans"
+msgstr "кредиты с ежемесячной оплатой"
+
+#: .\models\r_credit\model.py:200
+msgid "monthly payment loans info"
+msgstr "ежемесячный платеж кредиты информация"
+
+#: .\models\r_credit\model.py:206
+msgid "monthly profit info"
+msgstr "ежемесячная информация о прибыли"
+
+#: .\models\r_credit\model.py:210
+msgid "total business assets"
+msgstr "общие активы бизнеса"
+
+#: .\models\r_credit\model.py:214
+msgid "total business assets info"
+msgstr "общая информация об активах предприятия"
+
+#: .\models\r_credit\model.py:219
+msgid "client capital"
+msgstr "клиентский капитал"
+
+#: .\models\r_credit\model.py:221
+msgid "client capital info"
+msgstr "информация о капитале клиента"
+
+#: .\models\r_credit\model.py:225
+msgid "total household assets"
+msgstr "общие активы домохозяйства"
+
+#: .\models\r_credit\model.py:229
+msgid "total household assets info"
+msgstr "информация об общих активах домохозяйства"
+
+#: .\models\r_credit\model.py:234
+msgid "approve amount"
+msgstr "одобренная сумму"
+
+#: .\models\r_credit\model.py:237
+msgid "approve installment"
+msgstr "одобренный срок"
+
+#: .\models\r_credit\model.py:245 .\models\r_credit\serializer.py:23
+msgid "approve currency"
+msgstr "одобренная валюту"
+
+#: .\models\r_credit\model.py:250
+msgid "approve interest"
+msgstr "одобренный процент"
+
+#: .\models\r_credit\model.py:255
+msgid "approve grace period"
+msgstr "одобренный льготный период"
+
+#: .\models\r_credit\model.py:259
+msgid "approve issue fee"
+msgstr "одобренный комиссия на выдачу"
+
+#: .\models\r_credit\model.py:268 .\models\r_credit\serializer.py:53
+msgid "credit product"
+msgstr "кредитный продукт"
+
+#: .\models\r_credit\model.py:273
+msgid "rating internal"
+msgstr "рейтинг внутренний"
+
+#: .\models\r_credit\model.py:280
+msgid "rating external"
+msgstr "рейтинг внешний"
+
+#: .\models\r_credit\model.py:288
+msgid "approve condition"
+msgstr "утвердить условие"
+
+#: .\models\r_credit\model.py:304 .\models\r_credit\serializer.py:57
+#: .\models\rejection_reason\model.py:8
+msgid "rejection reason"
+msgstr "причина отклонения"
+
+#: .\models\r_credit\model.py:313 .\models\r_credit\serializer.py:61
+msgid "client rejection reason"
+msgstr "причина отклонения клиентом"
+
+#: .\models\r_credit\model.py:318
+msgid "postponed info"
+msgstr "отложенная информация"
+
+#: .\models\r_credit\model.py:324 .\models\r_credit\serializer.py:65
+msgid "decision client"
+msgstr "решение клиента"
+
+#: .\models\r_credit\model.py:328 .\models\r_credit\serializer.py:70
+msgid "customer"
+msgstr "клиент"
+
+#: .\models\r_credit\model.py:337 .\models\r_credit\serializer.py:75
+msgid "underwriter status"
+msgstr "статус андеррайтера"
+
+#: .\models\r_credit\model.py:340
+msgid "underwriter status change date"
+msgstr "дата изменения статуса андеррайтера"
+
+#: .\models\r_credit\model.py:348 .\models\r_credit\serializer.py:79
+msgid "underwriter status change by"
+msgstr "изменение статуса андеррайтера"
+
+#: .\models\r_credit\model.py:353
+msgid "result"
+msgstr "результат"
+
+#: .\models\r_credit\serializer.py:27
+msgid "created by"
+msgstr ""
+
+#: .\models\r_credit\serializer.py:32
+msgid "updated by"
+msgstr ""
+
+#: .\models\r_status\model.py:17
+msgid "request status"
+msgstr "статус заявки"
+
+#: .\models\r_status\model.py:18
+msgid "request statuses"
+msgstr "статусы заявок"
+
+#: .\models\rejection_reason\model.py:9
+msgid "rejection reasons"
+msgstr "причины отклонения"

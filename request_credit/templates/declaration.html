@@ -1,0 +1,124 @@
+<html>
+<style>
+td,th {
+  border: 0.85px solid black;
+  padding:8px 0px 8px 0px;
+}
+.bggray {
+  background-color: #d9d9d9;
+  font-size: 10px;
+}
+.cell {
+  text-align: center;
+  font-size: 10px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+p {
+  margin-top: -0.6px;
+  margin-bottom: -0.6px;
+  font-size: 8px;
+  font-weight: bolder;
+
+}
+</style>
+
+{% load static %}
+<div style="margin-top: -40px;">
+<img src="{% static 'logo.png' %}" style="width: 200px"  alt="">
+</div>
+
+<div style="text-align: center;">
+  <h3 style="font-size: 11px;">Эъломия оид ба дархости қарз № {{ credit.id }}</h3>
+</div>
+
+<table >
+  <tr>
+    <td  class="bggray cell">Ному насаби Аризадиҳанда</td>
+    <td  colspan="7" class="cell">{{ credit.customer.name }}</td>
+  </tr>
+  <tr>
+    <td  class="bggray cell">Намуди Фаъолият</td>
+    <td   colspan="7" class="cell">{{ credit.economic_activity_type }}</td>
+  </tr>
+  <tr>
+    <td class="bggray cell">Суроғаи ҷойгиршавии фаъолият</td>
+    <td colspan="7" class="cell">{{ credit.activity_location }}</td>
+  </tr>
+  <tr>
+    <td class="bggray cell">Таҳсилот</td>
+    <td class="cell">{{ credit.get_education_display }}</td>
+    <td class="cell">{{ credit.education_info }}</td>
+  </tr>
+
+  <tr >
+    <th  class="cell">Маълумоти молиявӣ</th>
+    <th  class="cell">Нишондиҳандаҳо барои як моҳ бо сомони</th>
+    <th   class="cell">Шарҳу эзоҳ</th>
+  </tr>
+  <tr>
+    <td  class="bggray cell">Даромади моҳона (музди меҳнат, соҳибкори ва ғ.)</td>
+    <td  class="cell">{{ credit.monthly_income }}</td>
+    <td  class="cell">{{ credit.monthly_income_info }}</td>
+  </tr>
+  <tr>
+    <td  class="bggray cell">Хароҷоти моҳонаи хонавода</td>
+    <td  class="cell">{{ credit.monthly_household_expenses }}</td>
+    <td   class="cell">{{ credit.monthly_household_expenses_info }}</td>
+  </tr>
+  <tr>
+    <td  class="bggray cell">Пардохти моҳонаи қарзҳои мувозӣ (агар бошад)</td>
+    <td  class="cell">{{ credit.monthly_payment_loans }}</td>
+    <td   class="cell">{{ credit.monthly_payment_loans_info }}</td>
+  </tr>
+  <tr>
+    <td  class="bggray cell">Фоидаи софи моҳона</td>
+    <td  class="bggray cell">{{ monthly_profit }}</td>
+    <td   class="cell">{{ credit.monthly_profit_info }}</td>
+  </tr>
+  <tr>
+    <td  class="bggray cell">Ҳаҷми умумии дороиҳои тиҷорат</td>
+    <td  class="cell">{{ credit.total_business_assets }}</td>
+    <td   class="cell">{{ credit.total_business_assets_info }}</td>
+  </tr>
+  <tr>
+    <td  class="bggray cell">Сармояи худи мизоҷ</td>
+    <td  class="cell">{{ credit.client_capital }}</td>
+    <td   class="cell">{{ credit.client_capital_info }}</td>
+  </tr>
+  <tr>
+    <td  class="bggray cell">Ҳаҷми умумии дороиҳои хонавода (амволи ғайриманқул, таҷҳизот, нақлиёт ва ғ.)</td>
+    <td  class="cell">{{ credit.total_household_assets }}</td>
+    <td  class="cell">{{ credit.total_household_assets_info }}</td>
+  </tr>
+  <tr>
+    <td style="border-bottom: #fefefe 0.7px solid;" colspan="8">
+      <div style="text-align: center;">
+        <p align="justify">Тасдиқ мекунам, ки тамоми маълумоти дар эъломияи мазкур дарҷёфта аз гуфтаҳои ман навишта шуда, пурра ва дуруст мебошад.</p>
+    </td>
+  </tr>
+</table>
+
+
+<table>
+  <tr>
+    <td class="bggray cell">Аризадиҳанда</td>
+    <td class="cell">{{ credit.customer.name }}</td>
+    <td class="cell">_______________<br>Имзо</td>
+    <td class="cell"><u>{{ current_date }}</u><br>Таърих</td>
+  </tr>
+  <tr><td style="border: #fefefe 0.3px solid; padding: 5px;"></td></tr>
+  <tr>
+    <td class="bggray cell">Мутахассис оид ба хизматрасонӣ</td>
+    <td class="cell">{{ credit.created_by }}</td>
+    <td class="cell">
+      {% if credit.created_by.user_signature %}
+        <img src="{{ credit.created_by.user_signature.url }}" style="height: 80px" />
+      {% endif %}
+    <br>Имзо</td>
+    <td class="cell"><u>{{ current_date }}</u><br>Таърих</td>
+  </tr>
+</table>

@@ -1,0 +1,212 @@
+<html>
+<style>
+td {
+  border: 0.85px solid black;
+  padding:3px 0px 3px 0px;
+}
+
+.bggray {
+  background-color: #d9d9d9;
+  font-size: 9px;
+}
+
+.cell {
+  text-align: center;
+  font-size: 9px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+ h4 {
+  margin-left: 13px;
+  margin-top: -1px;
+  margin-bottom: -1px;
+  font-size: 8px;
+  font-weight: bolder;
+}
+
+ p {
+  margin-top: -0.6px;
+  margin-bottom: -0.6px;
+  font-size: 10px;
+}
+</style>
+
+{% load static %}
+<div style="margin-top: -60px;">
+<img src="{% static 'logo.png' %}" style="width: 200px"  alt="">
+</div>
+
+<div style="text-align: center;">
+  <h3 style="font-size: 12px;">Дархост барои гирифтани қарз № {{ credit.id }}</h3>
+</div>
+
+
+
+<table>
+  <tr>
+   <td colspan="8"><h4>1. Маълумот дар бораи дархосткунанда</h4></td>
+</tr>
+  <tr>
+      <td colspan="2" class="bggray cell">Ному насаби Аризадиҳанда</td>
+      <td colspan="6" class="cell">{{ credit.customer.name }}</td>
+  </tr>
+  <tr>
+      <td colspan="2" class="bggray cell">Санаи таваллуд</td>
+      <td colspan="6" class="cell">{{ credit.customer.birthday|date:'d.m.Y' }}</td>
+  </tr>
+  <tr>
+      <td colspan="2" class="bggray cell">Суроғаи бақайдгири-Шаҳр/Ноҳия</td>
+      <td colspan="2"  class="cell">{{ credit.customer.registration_address.town.region }}</td>
+      {% if credit.customer.registration_address.name != "None" %}
+        <td colspan="1"   class="cell">{{ credit.customer.registration_address.town }}</td>
+        <td colspan="2" class="cell">{{ credit.customer.registration_address }}</td>
+      {% else %}
+        <td colspan="3"   class="cell">{{ credit.customer.registration_address.town }}</td>
+      {% endif %}
+  </tr>
+  <tr>
+      <td colspan="2" class="bggray cell">Суроғаи бақайдгири Ҷамоат/Деҳа/Куча</td>
+      <td colspan="6" class="cell">{{ credit.customer.registration_address_street }}</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="bggray cell">Рақами Шиноснома</td>
+    <td style="padding-left: 20px;padding-right: 20px;" class="cell">{{ credit.customer.passport }}</td>
+    <td   class="bggray cell">РМА</td>
+    <td style="padding-left: 20px;padding-right: 20px;"  class="cell">{{ credit.customer.INN }}</td>
+    <td   class="bggray cell">Ҷинс </td>
+    <td   class="cell">{{ credit.customer.get_gender_display }}</td>
+  </tr>
+  <tr>
+      <td colspan="2" class="bggray cell"> Аз тарафи ки ва кай дода шудааст</td>
+      <td colspan="2" class="cell">{{ credit.customer.passport_details }}</td>
+      <td colspan="2" class="bggray cell"> Санаи додани шиноснома</td>
+      <td colspan="2" class="cell">{{ credit.customer.passport_date|date:"d.m.Y" }}</td>
+  </tr>
+  <tr>
+      <td colspan="2" class="bggray cell">Суроғаи ҷойи зист-Шаҳр/Ноҳия</td>
+      <td colspan="2" class="cell">{{ credit.customer.address.town.region }}</td>
+      {% if credit.customer.address.name != "None" %}
+        <td colspan="1" class="cell">{{ credit.customer.address.town }}</td>
+        <td colspan="2" class="cell">{{ credit.customer.address }}</td>
+      {% else %}
+        <td colspan="3"   class="cell">{{ credit.customer.address.town }}</td>
+      {% endif %}
+  </tr>
+  <tr>
+      <td colspan="2"  class="bggray cell">Суроғаи ҷойи зист-Ҷамоат/Деҳа/Куча</td>
+      <td  colspan="6" class="cell">{{ credit.customer.address_street }}</td>
+  </tr>
+  <tr>
+      <td colspan="2"  class="bggray cell">Рақами телефони мизоҷ (1)</td>
+      <td colspan="2" class="cell">{{ credit.customer.phone1 }}</td>
+      <td colspan="2" class="bggray cell">Рақами телефони мизоҷ (2)</td>
+      <td colspan="2" class="cell" style="padding-left: 6px;padding-right: 10px;">{{ credit.customer.phone2 }}</td>
+  </tr>
+  <tr style="height: 10px;" >
+      <td colspan="2"  class="bggray cell">Вазъи оилавӣ</td>
+      <td class="cell">{{ credit.customer.get_family_status_display }}</td>
+      <td class="bggray cell">Шумораи аъзоёни оила</td>
+      <td class="cell">{{ credit.family_number }}</td>
+      <td class="bggray cell">Аз онҳо даромади Худро доранд</td>
+      <td class="cell">{{ credit.family_number_has_income }}</td>
+  </tr>
+  <tr>
+      <td colspan="2"  class="bggray cell">Ҳамсар/Аъзои оила (Ному насаб)</td>
+      <td colspan="2"class="cell">{{ credit.customer.spouse }}</td>
+      <td colspan="2" class="bggray cell">Рақами телефон</td>
+      <td  class="cell">{{ credit.customer.spouse_phone }}</td>
+  </tr>
+  <tr>
+      <td colspan="2"  class="bggray cell">Оё шумо қарзи ҷорӣ доред?</td>
+      <td colspan="2" class="cell">{{ credit.get_current_debt_display }}</td>
+      <td colspan="2" class="bggray cell">Аз кадом Ташкилоти қарзӣ ?</td>
+      <td class="cell">{{ credit.current_debt_name }}</td>
+  </tr>
+  <tr>
+      <td colspan="2"  class="bggray cell">Оё Шумо бо ACTED ҳамкори доштед? (Ҳа/Не)</td>
+      <td class="cell">{{ credit.get_acted_display }}</td>
+      <td class="bggray cell">Шумораи кормандоне, ки вақти кории пурра доранд?</td>
+      <td class="cell">{{ credit.full_time_employees }}</td>
+      <td class="bggray cell">Ташкили ҷойҳои кори нав </td>
+      <td class="cell">{{ credit.new_job }}</td>
+  </tr>
+  <tr>
+      <td colspan="2"  class="bggray cell">Дар бораи қарз аз кучо хабар ёфтед? Сарчашмаи маълумот дар</td>
+      <td colspan="6"  class="cell">{{ credit.get_information_source_display }}</td>
+  </tr>
+  <tr>
+    <td colspan="8"><h4>2. Маълумот дар бораи фаъолият</h4></td>
+  </tr>
+
+  <tr>
+    <td colspan="1" class="bggray cell">Категорияи фаъолият</td>
+    <td colspan="7" class="cell">{{ credit.economic_activity }}</td>
+  </tr>
+
+  <tr>
+    <td colspan="1" style="border-top: #fefefe 0.7px solid;" class="bggray cell">Намуди фаъолият</td>
+    <td  colspan="3"class="cell">{{ credit.economic_activity_type }}</td>
+    <td  colspan="2"class="bggray cell">Таҷрибаи корӣ (моҳ)</td> 
+    <td  colspan="2" class="cell">{{ credit.work_experience }}</td>
+  </tr>
+
+  <tr>
+  <td colspan="4" class="bggray cell">Дар кадом филиал/МХМХ мехоҳед хизматрасони карда шавед</td>
+  <td colspan="4" class="cell">{{ credit.branch }}</td>
+  </tr>
+</table>
+
+
+<table >
+<tr>
+  <td style="border-top: #fefefe 0.7px solid;" colspan="8"><h4>3. Шартхои қарзи дархостшаванда</h4></td>
+</tr>
+<tr>
+<td colspan="3" class="bggray cell">Маблағи дархостшуда</td>
+<td class="cell">{{ credit.request_amount }}</td>
+<td class="bggray cell">Асъор</td>
+<td class="cell">{{ credit.currency_new.description }}</td>
+<td class="bggray cell">Муҳлати қарз (моҳ)</td>
+<td  class="cell">{{ credit.request_installment }}</td>
+</tr>
+<tr>
+<td colspan="3" class="bggray cell">Мақсади қарз</td>
+<td class="cell">{{ credit.credit_purpose }}</td>
+<td class="bggray cell">Муҳлати имтиёзнок (моҳ)</td>
+<td colspan="3" class="cell">{{ credit.request_grace_period }}</td>
+</tr>
+<tr>
+<td  colspan="3" class="bggray cell">Соҳаи маблағгузорӣ</td>
+<td colspan="5" class="cell">{{ credit.get_investment_sector_display }}</td>
+</tr>
+<tr>
+  <td style="border-bottom: #fefefe 0.7px solid;" colspan="8">
+    <div style="text-align: center;">
+      <p align="justify">Ман, шахси дар поён имзогузошта тасдиқ мекунам, ки тамоми иттилооти дар боло зикршуда дуруст ва комил мебошад. Ман бо шартҳои қарздиҳӣ розӣ ҳастам ва омодаам, ки ба маъмури қарз барои дарёфт кардани маълумоти пурра дар бораи бизнес ва иқтисоди хонаводагии ман мусоидат намоям. Ман хуб мефаҳмам ва розӣ ҳастам, ки дар сурати ошкор кардани  қарздорӣ, минбаъд тартиботи дархост ва додани қарз мумкин аст дар ҳама марҳилаи он бекор карда шавад. Ман мефаҳмам, ки пур кардани дархости мазкур ҳанӯз дарёфт кардани қарзро замонат намедиҳад. Бинобар ин, ман зид нестам, ки агар ОКСУС барои дарёфти иттилооти дигар дар бораи бизнес ва иқтисоди хонаводагии  ман ба созмонҳо, бонкҳо ё шахсони дигар муроҷиат намояд.</p>
+    </div>
+  </td>
+</tr>
+</table>
+
+
+<table>
+<tr>
+<td class="bggray cell" >Аризадиҳанда</td>
+<td class="cell">{{ credit.customer.name }}</td>
+<td class="cell">_______________<br>Имзо</td>
+<td class="cell"><u>{{ current_date }}</u><br>Таърих</td>
+</tr>
+<tr><td style="border: #fefefe 0.3px solid; padding: 5px;"></td></tr>
+<tr>
+<td  class="bggray cell">Мутахассис оид ба хизматрасонӣ</td>
+<td   class="cell">{{ credit.created_by }}</td>
+<td  class="cell">
+  {% if credit.created_by.user_signature %}
+    <img src="{{ credit.created_by.user_signature.url }}" style="height: 80px" />
+  {% endif %}
+ <br>Имзо</td>
+<td  class="cell"><u>{{ current_date }}</u><br>Таърих</td>
+</tr>
+</table>

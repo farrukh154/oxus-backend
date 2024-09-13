@@ -1,0 +1,98 @@
+<html>
+<style>
+  header {
+    position: fixed;
+    top: -1cm;
+    width: 100%;
+  }
+  footer {
+    position: fixed;
+    bottom: -1.7cm;
+    width: 100%;
+  }
+
+  @page {
+    size: A4;
+    margin-top: 2cm;
+    margin-bottom: 3cm;
+    @top-center {
+      content: element(header);
+      width: 100%;
+      margin-top: 2cm;
+    }
+    @bottom-center {
+      content: element(footer);
+      width: 100%;
+    }
+    counter-increment: page;
+    @bottom-right {
+      content: "Страница " counter(page) " / " counter(pages);
+      border-top: .25pt solid #666;
+      width: 50%;
+    }
+  }
+
+  .table-row-high {
+    border-bottom: 1px solid blue
+  }
+  .table-row{
+    border-bottom: 1px solid gray
+  }
+  .table-row-title {
+    font-size: 10px;
+    font-weight: bold;
+  }
+  .table-row-data {
+    font-size: 10px;
+  }
+  .table-header {
+    background-color: #E1F7F5;
+  }
+
+  .scoring-style {
+    width: 20px;
+    height: 20px;
+    display: block;
+    border: 1px solid blue;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0;
+    font-weight: 900;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+  .scoring-style-active {
+    width: 35px;
+    height: 35px;
+    font-size: 24px;
+    margin-top: -7px;
+  }
+</style>
+
+<header>
+<i style="font-size: 11px;">КРЕДИТНЫЙ ОТЧЁТ СОЗДАН {{ crif.created|date:"d.m.Y H:i:m" }}</i>
+</header>
+<footer>
+  <div style="font-size: 10px; text-align: center;">Данный документ содержит конфиденциальную информацию, являющуюся банковской тайной, которая регулируются Законом о Кредитных историях и запрещает дальнейшую передачу третьим лицам.</div>
+  <div style="text-align: center;">Конфиденциально</div>
+</footer>
+
+{% load static crif_format_date crif_get_phase crif_get_product crif_get_role crif_get_gender crif_iterate %}
+{% load crif_get_flg_reorg crif_get_debt_reason crif_get_payment_method crif_get_payment_periodicity %}
+{% load crif_get_personal_guarantees crif_get_real_guarantees crif_get_worst_status crif_get_days_delay crif_get_doc_type %}
+{% load crif_get_employment_status crif_get_occupation_type %}
+
+<div style="justify-content: center; align-items: center; display: flex;">
+  <img src="{% static 'logo.png' %}" style="width: 100px">
+  <img src="{% static 'crif.jpg' %}" style="width: 100px">
+  <p style="font-size: 9px;  text-align: left;">
+    LLC BCH «CRIF Tajikistan»<br>
+    ЧДММ БТК «Криф Тоикистон»<br>
+    ООО БКИ «Криф Таджикистан»
+  </p>
+</div>
+
+<h4 style="justify-content: center; align-items: center; display: flex;">Ошибка: {{data.Error.Description}}</h4>
+<h4 style="justify-content: center; align-items: center; display: flex;">Код ошибки: {{data.Error.Code}}</h4>
+<h4 style="justify-content: center; align-items: center; display: flex;">Категория ошибки: {{data.Error.Category}}</h4>

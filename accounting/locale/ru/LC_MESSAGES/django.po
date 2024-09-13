@@ -1,0 +1,77 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-16 13:12+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\apps.py:6
+msgid "accounting"
+msgstr "бухгалтерия"
+
+#: .\models\account\model.py:6
+msgid "Code"
+msgstr "Код"
+
+#: .\models\account\model.py:7
+msgid "Description"
+msgstr "Описание"
+
+#: .\models\account\model.py:14
+msgid "account"
+msgstr "счёт"
+
+#: .\models\account\model.py:15
+msgid "Accounts"
+msgstr "Счета"
+
+#: .\models\chart_account\model.py:7 .\models\general_ledger\model.py:8
+msgid "Name"
+msgstr "Имя"
+
+#: .\models\chart_account\model.py:11
+msgid "Ru name"
+msgstr "Имя на русском"
+
+#: .\models\chart_account\model.py:15
+msgid "TJ name"
+msgstr "Имя на ТАДЖ"
+
+#: .\models\chart_account\model.py:18
+msgid "Account Number"
+msgstr "Номер счёта"
+
+#: .\models\chart_account\model.py:22
+msgid "chart account"
+msgstr "расчетный счет"
+
+#: .\models\chart_account\model.py:23
+msgid "Chart Accounts"
+msgstr "Расчётные счета"
+
+#: .\models\general_ledger\model.py:14 .\models\general_ledger\serializer.py:12
+msgid "Account"
+msgstr "Счёт"
+
+#: .\models\general_ledger\model.py:19
+msgid "general ledger"
+msgstr "бухгалтерскую книгу"
+
+#: .\models\general_ledger\model.py:20
+msgid "General Ledgers"
+msgstr "Бухгалтерские книги"

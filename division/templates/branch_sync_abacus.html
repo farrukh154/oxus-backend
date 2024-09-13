@@ -1,0 +1,45 @@
+{% extends "admin/change_list.html" %}
+{% comment %} {% load i18n static %} {% endcomment %}
+
+{% block extrahead %}
+{{ block.super }}
+{{ media.js }}
+    <script type="text/javascript" src="/static/js/vue.js"></script>
+    <script type="module">
+        const { createApp, ref } = Vue
+        createApp({
+            setup() {
+                async function sync() {
+                    const formData = new FormData();
+                    formData.append( "csrfmiddlewaretoken", "{{csrf_token}}");
+                    const xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = () => {
+                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                            alert(xhr.responseText);
+                            window.location.reload()
+                        }
+                    };
+                    xhr.open("POST", "/division/sync-branch-list/", true);
+                    await xhr.send(formData);
+                }
+                return {
+                    sync
+                }
+            }
+        }).mount('#app')
+    </script>
+{% endblock %}
+
+
+{% block object-tools %}
+<div id="app">
+    <ul class="object-tools">
+        <li>
+            <a href="#" @click="sync" class="addlink btn btn-high btn-success">Синхронизация с Абакус</a>
+        </li>
+        {% block object-tools-items %}
+            {{ block.super }}
+        {% endblock %}
+    </ul>
+</div>
+{% endblock %}

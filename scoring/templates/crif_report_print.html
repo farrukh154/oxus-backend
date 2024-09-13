@@ -1,0 +1,712 @@
+<html>
+<style>
+  header {
+    position: fixed;
+    top: -1cm;
+    width: 100%;
+  }
+  footer {
+    position: fixed;
+    bottom: -1.7cm;
+    width: 100%;
+  }
+
+  @page {
+    size: A4;
+    margin-top: 2cm;
+    margin-bottom: 3cm;
+    @top-center {
+      content: element(header);
+      width: 100%;
+      margin-top: 2cm;
+    }
+    @bottom-center {
+      content: element(footer);
+      width: 100%;
+    }
+    counter-increment: page;
+    @bottom-right {
+      content: "Страница " counter(page) " / " counter(pages);
+      border-top: .25pt solid #666;
+      width: 50%;
+    }
+  }
+
+  .table-row-high {
+    border-bottom: 1px solid blue
+  }
+  .table-row{
+    border-bottom: 1px solid gray
+  }
+  .table-row-title {
+    font-size: 10px;
+    font-weight: bold;
+  }
+  .table-row-data {
+    font-size: 10px;
+  }
+  .table-header {
+    background-color: #E1F7F5;
+  }
+
+  .scoring-style {
+    width: 20px;
+    height: 20px;
+    display: block;
+    border: 1px solid blue;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0;
+    font-weight: 900;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+  .scoring-style-active {
+    width: 35px;
+    height: 35px;
+    font-size: 24px;
+    margin-top: -7px;
+  }
+</style>
+
+<header>
+<i style="font-size: 11px;">КРЕДИТНЫЙ ОТЧЁТ СОЗДАН {{ crif.created|date:"d.m.Y H:i:m" }}</i>
+</header>
+<footer>
+  <div style="font-size: 10px; text-align: center;">Данный документ содержит конфиденциальную информацию, являющуюся банковской тайной, которая регулируются Законом о Кредитных историях и запрещает дальнейшую передачу третьим лицам.</div>
+  <div style="text-align: center;">Конфиденциально</div>
+</footer>
+
+{% load static crif_format_date crif_get_phase crif_get_product crif_get_role crif_get_gender crif_iterate %}
+{% load crif_get_flg_reorg crif_get_debt_reason crif_get_payment_method crif_get_payment_periodicity %}
+{% load crif_get_personal_guarantees crif_get_real_guarantees crif_get_worst_status crif_get_days_delay crif_get_doc_type %}
+{% load crif_get_employment_status crif_get_occupation_type %}
+
+<div style="justify-content: center; align-items: center; display: flex;">
+  <img src="{% static 'logo.png' %}" style="width: 100px">
+  <img src="{% static 'crif.jpg' %}" style="width: 100px">
+  <p style="font-size: 9px;  text-align: left;">
+    LLC BCH «CRIF Tajikistan»<br>
+    ЧДММ БТК «Криф Тоикистон»<br>
+    ООО БКИ «Криф Таджикистан»
+  </p>
+</div>
+
+<h4 style="justify-content: center; align-items: center; display: flex;">КРЕДИТНЫЙ ОТЧЁТ</h4>
+<div class="table-row-high" style="font-size: 11px;"><strong>Aвтор Oтчёта:</strong> {{crif.generated_by}}</div>
+<h4 style="margin: 10px;">ДАННЫЕ ПО СУБЪЕКТУ</h4>
+<table style="width: 100%; word-break: break-all; border-collapse: collapse;">
+  <tr class="table-row-high">
+    <td class="table-row-title">Субъект найден</td>
+    <td class="table-row-data" colspan="3">{{find}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-title">Код субъекта в Кредитном бюpo</td>
+    <td class="table-row-data">{{subject.CBSubjectCode|default_if_none:'-'}}</td>
+    <td class="table-row-title">Код субъекта ФИ</td>
+    <td class="table-row-data">{{subject.FISubjectCode|default_if_none:'-'}}</td>
+  </tr>
+  {% if is_company %}
+  <tr class="table-row">
+    <td class="table-row-title">Полное наименование компании</td>
+    <td class="table-row-data">{{subject_details.LongCompanyName|default_if_none:'-'}}</td>
+    <td class="table-row-title">Короткое наименование компании</td>
+    <td class="table-row-data">{{subject_details.ShortCompanyName|default_if_none:'-'}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-title">ИНН</td>
+    <td class="table-row-data">{{subject_details.INN|default_if_none:'-'}}</td>
+    <td class="table-row-title">Тип компании</td>
+    <td class="table-row-data">{{subject_details.CompanyType|default_if_none:'-'}}</td>
+  </tr>
+  {% else %}
+  <tr class="table-row">
+    <td class="table-row-title">Пол</td>
+    <td class="table-row-data" colspan="3">{{subject_details.Gender|crif_get_gender}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-title">Имя</td>
+    <td class="table-row-data">{{subject_details.FirstName|default_if_none:'-'}}</td>
+    <td class="table-row-title">Oтчeство</td>
+    <td class="table-row-data">{{subject_details.Patronymic|default_if_none:'-'}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-title">Фамилия</td>
+    <td class="table-row-data">{{subject_details.Surname|default_if_none:'-'}}</td>
+    <td class="table-row-title">Предыдущее имя</td>
+    <td class="table-row-data">{{subject_details.PrevFirstName|default_if_none:'-'}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-title">Предыдущая фамилия</td>
+    <td class="table-row-data">{{subject_details.PrevSurname|default_if_none:'-'}}</td>
+    <td class="table-row-title">Девичья фамилия матери</td>
+    <td class="table-row-data">{{subject_details.MotherMaidenName|default_if_none:'-'}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-title">Дата рождения</td>
+    <td class="table-row-data">{{subject_details.DateOfBirth|crif_format_date}}</td>
+    <td class="table-row-title">Место рождения</td>
+    <td class="table-row-data">-</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-title">Страна рождения</td>
+    <td class="table-row-data" colspan="3">{{subject_details.CountryOfBirth|default_if_none:'-'}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-title">ИНН</td>
+    <td class="table-row-data" colspan="3">{{subject_details.INN|default_if_none:'-'}}</td>
+  </tr>
+  {% for pasp in passport|crif_iterate %}
+  <tr class="table-row">
+    <td class="table-row-title">Тип документа</td>
+    <td class="table-row-data">{{pasp.DocType|crif_get_doc_type}}</td>
+    <td class="table-row-title">Серия и номер паспорта</td>
+    <td class="table-row-data">{{pasp.DocSeriesAndNumber|default_if_none:'-'}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-title">Дата выдачи паспорта</td>
+    <td class="table-row-data">{{pasp.DocIssueDate|crif_format_date}}</td>
+    <td class="table-row-title">Кем выдан</td>
+    <td class="table-row-data">{{pasp.DocIssueAuthPlace|default_if_none:'-'}}</td>
+  </tr>
+  {% endfor %}
+  {% endif %}
+  <tr class="table-row-high">
+    <td class="table-row-title" colspan="4">Адрес</td>
+  </tr>
+  {% for address in subject_details.Address.Main|crif_iterate %}
+  <tr class="table-row">
+    <td class="table-row-title">{% if address.AddressType == 'AT' %}Дополнительный адрес{% else %}Основной адрес{% endif %}</td>
+    <td class="table-row-data" colspan="3">{{address.StreetNumAndName}} {{address.City}}</td>
+  </tr>
+  {% endfor %}
+  {% for address in subject_details.Address.Current|crif_iterate %}
+  <tr class="table-row">
+    <td class="table-row-title">{% if address.AddressType == 'AT' %}Дополнительный адрес{% else %}Основной адрес{% endif %}</td>
+    <td class="table-row-data" colspan="3">{{address.StreetNumAndName}} {{address.City}}</td>
+  </tr>
+  {% endfor %}
+  {% if subject_details.Address.Historical %}
+  <tr class="table-row-high">
+    <td class="table-row-title" colspan="4">Исторический адрес</td>
+  </tr>
+  {% for address in subject_details.Address.Historical|crif_iterate %}
+  <tr class="table-row">
+    <td class="table-row-title">{% if address.AddressType == 'AT' %}Дополнительный адрес{% else %}Основной адрес{% endif %}</td>
+    <td class="table-row-data" colspan="3">{{address.StreetNumAndName}}, {{address.City}}</td>
+  </tr>
+  {% endfor %}
+  {% endif %}
+  <tr class="table-row-high">
+    <td class="table-row-title" colspan="4">Контакты</td>
+  </tr>
+  {% for contact in subject_details.Contacts|crif_iterate %}
+  <tr class="table-row">
+    <td class="table-row-title">Мобильный телефон {{forloop.counter}}</td>
+    <td class="table-row-data" colspan="3">{{contact.ContactNumber}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% if subject_details.Employements %}
+<table style="width: 100%; word-break: break-all; border-collapse: collapse;">
+  <tr class="table-row-high">
+    <td class="table-row-title" colspan="8">Основные сведения о работодателе</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-title">Характер занятости</td>
+    <td class="table-row-title">Имя работодателя</td>
+    <td class="table-row-title">Тип занятости</td>
+    <td class="table-row-title">Валовый годовой доход</td>
+    <td class="table-row-title">Дата приёма на работу</td>
+    <td class="table-row-title">Дата увольнения</td>
+    <td class="table-row-title">Должность</td>
+    <td class="table-row-title">Номер трудового договора</td>
+  </tr>
+  {% for emp in subject_details.Employements|crif_iterate %}
+  <tr class="table-row">
+    <td class="table-row-data">{{emp.Status|crif_get_employment_status}}</td>
+    <td class="table-row-data">{{emp.EmployerName|default_if_none:'-'}}</td>
+    <td class="table-row-data">{{emp.OccupationType|crif_get_occupation_type}}</td>
+    <td class="table-row-data">{{emp.AnnualIncome|default_if_none:'-'}}</td>
+    <td class="table-row-data">{{emp.DateHired|crif_format_date}}</td>
+    <td class="table-row-data">{{emp.DateTerminated|crif_format_date}}</td>
+    <td class="table-row-data">{{emp.JobTitle|default_if_none:'-'}}</td>
+    <td class="table-row-data">{{emp.ContractNumber|default_if_none:'-'}}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+<h4 style="margin: 10px;">ДАННЫЕ ПО СКОРИНГУ</h4>
+<table style="width: 100%; word-break: break-all; border-collapse: collapse;">
+  <tr class="table-row-high">
+    {% if data.CreditHistory.Score.ExclusionRule.Description %}
+    <td class="table-row-title">Сообщения о скоринге</td>
+    <td style="font-size: 14px; font-weight: bold;">{{data.CreditHistory.Score.ExclusionRule.Description|default_if_none:'-'}}</td>
+    {% else %}
+    <td class="table-row-title">Скоринг</td>
+    <td style="font-size: 14px; font-weight: bold;">{{data.CreditHistory.Score.Score|default_if_none:'-'}}</td>
+    <td class="table-row-title">Диапазон скоринга</td>
+    <td style="font-size: 14px; font-weight: bold;">{{data.CreditHistory.Score.Range|default_if_none:'-'}}</td>
+    <td class="table-row-title">Сообщения о скоринге</td>
+    <td style="font-size: 12px; font-weight: bold;">{{data.CreditHistory.Score.ScoreMessage|default_if_none:'-'}}</td>
+    <td>
+      <div style="width: 6.5cm; display: flex; padding-left: 10px">
+        <span class="scoring-style {% if data.CreditHistory.Score.Range == 'A' %} scoring-style-active {% endif %}" style="background-color: #61AD40;">A</span>
+        <span class="scoring-style {% if data.CreditHistory.Score.Range == 'B' %} scoring-style-active {% endif %}" style="background-color: #8DB240;">B</span>
+        <span class="scoring-style {% if data.CreditHistory.Score.Range == 'C' %} scoring-style-active {% endif %}" style="background-color: #B2CA38;">C</span>
+        <span class="scoring-style {% if data.CreditHistory.Score.Range == 'D' %} scoring-style-active {% endif %}" style="background-color: #D3DB36;">D</span>
+        <span class="scoring-style {% if data.CreditHistory.Score.Range == 'E' %} scoring-style-active {% endif %}" style="background-color: #EFEA38;">E</span>
+        <span class="scoring-style {% if data.CreditHistory.Score.Range == 'F' %} scoring-style-active {% endif %}" style="background-color: #E0CD31;">F</span>
+        <span class="scoring-style {% if data.CreditHistory.Score.Range == 'G' %} scoring-style-active {% endif %}" style="background-color: #E6A934;">G</span>
+        <span class="scoring-style {% if data.CreditHistory.Score.Range == 'H' %} scoring-style-active {% endif %}" style="background-color: #D68951;">H</span>
+        <span class="scoring-style {% if data.CreditHistory.Score.Range == 'I' %} scoring-style-active {% endif %}" style="background-color: #D8543D;">I</span>
+        <span class="scoring-style {% if data.CreditHistory.Score.Range == 'J' %} scoring-style-active {% endif %}" style="background-color: #DB3831;">J</span>
+      </div>
+    </td>
+    {% endif %}
+  </tr>
+  {% for factor in data.CreditHistory.Score.ScoreFactor %}
+  <tr>
+    <td class="table-row-title" colspan="5">ФАКТОРЫ, ВЛИЯЮЩИЕ НА СКОРИНГ {{forloop.counter}}</td>
+    <td class="table-row-data" colspan="2">{{factor.Description}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h4 style="margin: 10px;">ДАННЫЕ ПО КОНТРАКТУ</h4>
+<table style="width: 100%; word-break: break-all; border-collapse: collapse;">
+  <tr class="table-row-high">
+    <td class="table-row-title" colspan="2">Общие данные</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-title">Количество заявок и контрактов</td>
+    <td class="table-row-data">{{data.CreditHistory.GeneralData.TotalContracts}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-title">Общее количество ФИ предоставляющие данные о субъекте</td>
+    <td class="table-row-data">{{data.CreditHistory.GeneralData.TotalInstitutes}}</td>
+  </tr>
+</table>
+
+<table style="width: 100%; word-break: break-all; border-collapse: collapse;">
+  <tr class="table-row-high">
+    <td class="table-row-title" colspan="6">Краткие сведения по фазам контрактов</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-title">Тип контракта</td>
+    <td class="table-row-title">Запрошен</td>
+    <td class="table-row-title">Oтказан</td>
+    <td class="table-row-title">Oтозван</td>
+    <td class="table-row-title">Существующий</td>
+    <td class="table-row-title">Завершён</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">В Рассрочку</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.Instalments.Summary.TotalRequested}}</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.Instalments.Summary.TotalRefused}}</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.Instalments.Summary.TotalRenounced}}</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.Instalments.Summary.TotalActive}}</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.Instalments.Summary.TotalClosed}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Не в рассрочу</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.NonInstalments.Summary.TotalRequested}}</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.NonInstalments.Summary.TotalRefused}}</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.NonInstalments.Summary.TotalRenounced}}</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.NonInstalments.Summary.TotalActive}}</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.NonInstalments.Summary.TotalClosed}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Кредитные карты</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.CreditCards.Summary.TotalRequested}}</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.CreditCards.Summary.TotalRefused}}</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.CreditCards.Summary.TotalRenounced}}</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.CreditCards.Summary.TotalActive}}</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.CreditCards.Summary.TotalClosed}}</td>
+  </tr>
+</table>
+
+{% if data.CreditHistory.Contract.Instalments.GrantedContract %}
+<h4 style="margin: 10px;">I. ОПИСАНИЕ: ВОЗМОЖНОСТЕЙ КОНТРАКТА В РАССРОЧКУ</h4>
+<table style="width: 100%; word-break: break-all; border-collapse: collapse;">
+  <tr class="table-row">
+    <td class="table-row-title"></td>
+    <td class="table-row-title">Заёмщик/Созаёмщик</td>
+    <td class="table-row-title">Поручитель</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-title">Сумма ежемесячных платежей</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.Instalments.ACSummary.TotInstallmentsAmn}}</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.Instalments.GSummary.TotInstallmentsAmn}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-title">Сумма Остаточных платёжей</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.Instalments.ACSummary.TotRemainInstallAmn}}</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.Instalments.GSummary.TotRemainInstallAmn}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-title">Сумма просроченных платежей</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.Instalments.ACSummary.TotPastDueAmn}}</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.Instalments.GSummary.TotPastDueAmn}}</td>
+  </tr>
+</table>
+
+<h4 style="margin: 10px;">I.1. Существующий, Завершенный, Заранее завершенный</h4>
+<table style="width: 100%; word-break: break-all; border-collapse: collapse;">
+  <tr class="table-header">
+    <th class="table-row-title">N</th>
+    <th class="table-row-title">Тип финансирования</th>
+    <th class="table-row-title">Фаза</th>
+    <th class="table-row-title">Роль</th>
+    <th class="table-row-title">Дата начала</th>
+    <th class="table-row-title">Дата окончания контракта</th>
+    <th class="table-row-title">Последний месяц обновления</th>
+    <th class="table-row-title">Код контракта в Кредитном бюро</th>
+    <th class="table-row-title">Код контракта ФИ</th>
+    <th class="table-row-title">Код ФИ</th>
+  </tr>
+  {% for contract in data.CreditHistory.Contract.Instalments.GrantedContract|crif_iterate %}
+  <tr class="table-row">
+    <td class="table-row-data">{{forloop.counter}}</td>
+    <td class="table-row-data">{{contract.CommonData.ContractType|crif_get_product}}</td>
+    <td class="table-row-data">{{contract.CommonData.Phase|crif_get_phase}}</td>
+    <td class="table-row-data">{{contract.CommonData.Role|crif_get_role}}</td>
+    <td class="table-row-data">{{contract.CommonData.StartDate|crif_format_date}}</td>
+    <td class="table-row-data">{{contract.EndDate|crif_format_date}}</td>
+    <td class="table-row-data">{{contract.CommonData.LastUpdateDate|crif_format_date}}</td>
+    <td class="table-row-data">{{contract.CommonData.CBContractCode}}</td>
+    <td class="table-row-data">{{contract.CommonData.FIContractCode}}</td>
+    <td class="table-row-data">{{contract.CommonData.FICode}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h5 style="margin: 10px;">Описание Контракта в Рассрочку</h5>
+{% for contract in data.CreditHistory.Contract.Instalments.GrantedContract|crif_iterate %}
+<table style="width: 100%; word-break: break-all; border-collapse: collapse;">
+  <tr class="table-row-high">
+    <td class="table-row-title" colspan="4">{{contract.CommonData.ContractType|crif_get_product}} - Код контракта в Кредитном бюро: {{contract.CommonData.CBContractCode}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Код ФИ</td>
+    <td class="table-row-data">{{contract.CommonData.FICode}}</td>
+    <td class="table-row-data">Тип финансирования</td>
+    <td class="table-row-data">{{contract.CommonData.ContractType|crif_get_product}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Целевое использование кредита</td>
+    <td class="table-row-data">{{contract.DebtReason|crif_get_debt_reason}}</td>
+    <td class="table-row-data">Отметка реорганизованного кредита</td>
+    <td class="table-row-data">{{contract.FlgReorg|crif_get_flg_reorg}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Фаза</td>
+    <td class="table-row-data">{{contract.CommonData.Phase|crif_get_phase}}</td>
+    <td class="table-row-data">Роль</td>
+    <td class="table-row-data">{{contract.CommonData.Role|crif_get_role}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Валюта</td>
+    <td class="table-row-data">{{contract.CommonData.Currency}}</td>
+    <td class="table-row-data">Валюта кредита</td>
+    <td class="table-row-data">{{contract.CommonData.CreditCurrency}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Общая сумма</td>
+    <td class="table-row-data">{{contract.Amount}}</td>
+    <td class="table-row-data">Общее количество платежей</td>
+    <td class="table-row-data">{{contract.InstallmentNum}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Метод платежа</td>
+    <td class="table-row-data">{{contract.PaymentMethod|crif_get_payment_method}}</td>
+    <td class="table-row-data">Периодичность платежей</td>
+    <td class="table-row-data">{{contract.Periodicity|crif_get_payment_periodicity}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Ежемесячная сумма платежа</td>
+    <td class="table-row-data">{{contract.InstallmentAmn}}</td>
+    <td class="table-row-data"></td>
+    <td class="table-row-data"></td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Дата начала</td>
+    <td class="table-row-data">{{contract.CommonData.StartDate|crif_format_date}}</td>
+    <td class="table-row-data">Дата окончания контракта</td>
+    <td class="table-row-data">{{contract.EndDate|crif_format_date}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Дата последнего платежа</td>
+    <td class="table-row-data">{{contract.LastPaymentDate|crif_format_date}}</td>
+    <td class="table-row-data">Дата следующего платежа</td>
+    <td class="table-row-data">{{contract.NextInstallDate|crif_format_date}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Сумма следующего взноса</td>
+    <td class="table-row-data">{{contract.NextInstallAmn|default_if_none:'-'}}</td>
+    <td class="table-row-data"></td>
+    <td class="table-row-data"></td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Личные гарантии</td>
+    <td class="table-row-data">{{contract.PersonalGuarantees|crif_get_personal_guarantees}}</td>
+    <td class="table-row-data">Реальные гарантии</td>
+    <td class="table-row-data">{{contract.RealGuarantees|crif_get_real_guarantees}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Замечания</td>
+    <td class="table-row-data">{{contract.Remarks|default_if_none:'-'}}</td>
+    <td class="table-row-data"></td>
+    <td class="table-row-data"></td>
+  </tr>
+  <tr class="table-row-high">
+    <td class="table-row-title" colspan="4">Оставшиеся платежи</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Номер</td>
+    <td class="table-row-data">{{contract.RemainInstallNum}}</td>
+    <td class="table-row-data">Общая сумма</td>
+    <td class="table-row-data">{{contract.RemainAmn}}</td>
+  </tr>
+  <tr class="table-row-high">
+    <td class="table-row-title" colspan="4">Просроченные платежи</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Номер</td>
+    <td class="table-row-data">{{contract.PastDueInstallNum}}</td>
+    <td class="table-row-data">Общая сумма</td>
+    <td class="table-row-data">{{contract.PastDueInstallAmn}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Количество дней просрочки платежа</td>
+    <td class="table-row-data">{{contract.PastDueDaysNum}}</td>
+    <td class="table-row-data">Максимальная неуплаченная сумма</td>
+    <td class="table-row-data">{{contract.MaxUnpaidAmn}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Максимальный уровень дефолта</td>
+    <td class="table-row-data">{{contract.MaxDueInstallDate|crif_format_date}}</td>
+    <td class="table-row-data">Дата появления максимального уровня дефолта</td>
+    <td class="table-row-data">{{contract.MaxPastDueDaysDate|crif_format_date}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Количество месяцев в с максимальным уровнем дефолта</td>
+    <td class="table-row-data">{{contract.MaxMonthsDefaultNum}}</td>
+    <td class="table-row-data">Максимальное количество дней просрочки платежа</td>
+    <td class="table-row-data">{{contract.MaxPastDueDaysNum}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Наихудший статус</td>
+    <td class="table-row-data">{{contract.WorstStatus|crif_get_worst_status}}</td>
+    <td class="table-row-data">Дата появления наихудшего статуса</td>
+    <td class="table-row-data">{{contract.WorstStatusDate|crif_format_date}}</td>
+  </tr>
+</table>
+<h6 style="margin: 10px;">Исторические данные</h6>
+<table style="width: 100%; word-break: break-all; border-collapse: collapse;">
+  <tr class="table-row-high">
+    <td class="table-row-title">Год</td>
+    <td class="table-row-title">Месяц</td>
+    <td class="table-row-title">Дефолт</td>
+    <td class="table-row-title">Просроченные дни</td>
+    <td class="table-row-title">Статус</td>
+  </tr>
+  {% for history in contract.History|crif_iterate %}
+  <tr class="table-row">
+    <td class="table-row-data">{{history.Year}}</td>
+    <td class="table-row-data">{{history.Month}}</td>
+    <td class="table-row-data">{{history.DueInstallNum|default_if_none:'0'}}</td>
+    <td class="table-row-data">{{history.PastDueDaysNum|crif_get_days_delay}}</td>
+    <td class="table-row-data">{{history.Status|default_if_none:'-'}}</td>
+  </tr>
+  {% endfor %}
+</table>
+<br>
+<br>
+{% endfor %}
+{% endif %}
+
+{% if data.CreditHistory.Contract.Instalments.NotGrantedContract %}
+<h4 style="margin: 10px;">I.2. Запрошен, Отказан, Отозван</h4>
+<table style="width: 100%; word-break: break-all; border-collapse: collapse;">
+  <tr class="table-header">
+    <th class="table-row-title">N</th>
+    <th class="table-row-title">Тип финансирования</th>
+    <th class="table-row-title">Фаза</th>
+    <th class="table-row-title">Роль</th>
+    <th class="table-row-title">Код ФИ</th>
+    <th class="table-row-title">Дата обращения</th>
+    <th class="table-row-title">Количество платежей</th>
+    <th class="table-row-title">Периодичность платежей</th>
+    <th class="table-row-title">Общая сумма</th>
+    <th class="table-row-title">Ежемесячная сумма платежа</th>
+    <th class="table-row-title">Код контракта в Кредитном бюро</th>
+    <th class="table-row-title">Связанные субъекты</th>
+  </tr>
+  {% for contract in data.CreditHistory.Contract.Instalments.NotGrantedContract|crif_iterate %}
+  <tr class="table-row">
+    <td class="table-row-data">{{forloop.counter}}</td>
+    <td class="table-row-data">{{contract.ContractType|crif_get_product}}</td>
+    <td class="table-row-data">{{contract.Phase|crif_get_phase}}</td>
+    <td class="table-row-data">{{contract.Role|crif_get_role}}</td>
+    <td class="table-row-data">{{contract.FICode}}</td>
+    <td class="table-row-data">{{contract.ReqDate|crif_format_date}}</td>
+    <td class="table-row-data">{{contract.InstallmentNum}}</td>
+    <td class="table-row-data">{{contract.Periodicity|crif_get_payment_periodicity}}</td>
+    <td class="table-row-data">{{contract.Amount}}</td>
+    <td class="table-row-data"></td>
+    <td class="table-row-data">{{contract.CBContractCode}}</td>
+    <td class="table-row-data"></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+{% if data.CreditHistory.Contract.NonInstalments.GrantedContract %}
+<h4 style="margin: 10px;">II. ОПИСАНИЕ: ВОЗМОЖНОСТЕЙ КОНТРАКТА НЕ В РАССРОЧКУ</h4>
+<table style="width: 100%; word-break: break-all; border-collapse: collapse;">
+  <tr class="table-row">
+    <td class="table-row-title"></td>
+    <td class="table-row-title">Заёмщик/Созаёмщик</td>
+    <td class="table-row-title">Поручитель</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-title">Кредитный лимит</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.NonInstalments.ACSummary.TotCreditLimit}}</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.NonInstalments.GSummary.TotCreditLimit}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-title">Использованная Сумма</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.NonInstalments.ACSummary.TotUtilizAmn}}</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.NonInstalments.GSummary.TotUtilizAmn}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-title">Овердрафт</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.NonInstalments.ACSummary.TotOverdrAmn}}</td>
+    <td class="table-row-data">{{data.CreditHistory.Contract.NonInstalments.GSummary.TotOverdrAmn}}</td>
+  </tr>
+</table>
+<h4 style="margin: 10px;">II.1. Существующий, Завершенный, Заранее завершенный</h4>
+<table style="width: 100%; word-break: break-all; border-collapse: collapse;">
+  <tr class="table-header">
+    <th class="table-row-title">N</th>
+    <th class="table-row-title">Тип финансирования</th>
+    <th class="table-row-title">Фаза</th>
+    <th class="table-row-title">Роль</th>
+    <th class="table-row-title">Дата начала</th>
+    <th class="table-row-title">Дата окончания контракта</th>
+    <th class="table-row-title">Последний месяц обновления</th>
+    <th class="table-row-title">Код контракта в Кредитном бюро</th>
+    <th class="table-row-title">Код контракта ФИ</th>
+    <th class="table-row-title">Код ФИ</th>
+  </tr>
+  {% for contract in data.CreditHistory.Contract.NonInstalments.GrantedContract|crif_iterate %}
+  <tr class="table-row">
+    <td class="table-row-data">{{forloop.counter}}</td>
+    <td class="table-row-data">{{contract.CommonData.ContractType|crif_get_product}}</td>
+    <td class="table-row-data">{{contract.CommonData.Phase|crif_get_phase}}</td>
+    <td class="table-row-data">{{contract.CommonData.Role|crif_get_role}}</td>
+    <td class="table-row-data">{{contract.CommonData.StartDate|crif_format_date}}</td>
+    <td class="table-row-data">{{contract.EndDate|crif_format_date}}</td>
+    <td class="table-row-data">{{contract.CommonData.LastUpdateDate|crif_format_date}}</td>
+    <td class="table-row-data">{{contract.CommonData.CBContractCode}}</td>
+    <td class="table-row-data">{{contract.CommonData.FIContractCode}}</td>
+    <td class="table-row-data">{{contract.CommonData.FICode}}</td>
+  </tr>
+  {% endfor %}
+</table>
+<h5 style="margin: 10px;">Описании условии для кредитов не в рассрочку</h5>
+{% for contract in data.CreditHistory.Contract.NonInstalments.GrantedContract|crif_iterate %}
+<table style="width: 100%; word-break: break-all; border-collapse: collapse;">
+  <tr class="table-row-high">
+    <td class="table-row-title" colspan="4">{{contract.CommonData.ContractType|crif_get_product}} - Код контракта в Кредитном бюро: {{contract.CommonData.CBContractCode}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Код ФИ</td>
+    <td class="table-row-data">{{contract.CommonData.FICode}}</td>
+    <td class="table-row-data">Тип финансирования</td>
+    <td class="table-row-data">{{contract.CommonData.ContractType|crif_get_product}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Целевое использование кредита</td>
+    <td class="table-row-data">{{contract.DebtReason|crif_get_debt_reason}}</td>
+    <td class="table-row-data">Отметка реорганизованного кредита</td>
+    <td class="table-row-data">{{contract.FlgReorg|crif_get_flg_reorg}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Фаза</td>
+    <td class="table-row-data">{{contract.CommonData.Phase|crif_get_phase}}</td>
+    <td class="table-row-data">Роль</td>
+    <td class="table-row-data">{{contract.CommonData.Role|crif_get_role}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Валюта</td>
+    <td class="table-row-data">{{contract.CommonData.Currency}}</td>
+    <td class="table-row-data">Валюта кредита</td>
+    <td class="table-row-data">{{contract.CommonData.CreditCurrency}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Предоставленная сумма</td>
+    <td class="table-row-data">{{contract.CreditLimit}}</td>
+    <td class="table-row-data"></td>
+    <td class="table-row-data"></td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Дата начала</td>
+    <td class="table-row-data">{{contract.CommonData.StartDate|crif_format_date}}</td>
+    <td class="table-row-data">Дата окончания контракта</td>
+    <td class="table-row-data">{{contract.EndDate|crif_format_date}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Дата последнего платежа</td>
+    <td class="table-row-data">{{contract.LastPaymentDate|crif_format_date}}</td>
+    <td class="table-row-data"></td>
+    <td class="table-row-data"></td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Личные гарантии</td>
+    <td class="table-row-data">{{contract.PersonalGuarantees|crif_get_personal_guarantees}}</td>
+    <td class="table-row-data">Реальные гарантии</td>
+    <td class="table-row-data">{{contract.RealGuarantees|crif_get_real_guarantees}}</td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Замечания</td>
+    <td class="table-row-data">{{contract.Remarks|default_if_none:'-'}}</td>
+    <td class="table-row-data"></td>
+    <td class="table-row-data"></td>
+  </tr>
+  <tr class="table-row">
+    <td class="table-row-data">Наихудший статус</td>
+    <td class="table-row-data">{{contract.WorstStatus|crif_get_worst_status}}</td>
+    <td class="table-row-data">Дата появления наихудшего статуса</td>
+    <td class="table-row-data">{{contract.WorstStatusDate|crif_format_date}}</td>
+  </tr>
+</table>
+<h6 style="margin: 10px;">Исторические данные</h6>
+<table style="width: 100%; word-break: break-all; border-collapse: collapse;">
+  <tr class="table-row-high">
+    <td class="table-row-title">Год</td>
+    <td class="table-row-title">Месяц</td>
+    <td class="table-row-title">Одобренная Сумма</td>
+    <td class="table-row-title">Использованная Сумма</td>
+    <td class="table-row-title">Гарантирован</td>
+    <td class="table-row-title">Статус</td>
+  </tr>
+  {% for history in contract.History|crif_iterate %}
+  <tr class="table-row">
+    <td class="table-row-data">{{history.Year}}</td>
+    <td class="table-row-data">{{history.Month}}</td>
+    <td class="table-row-data">{{history.CreditLimit}}</td>
+    <td class="table-row-data">{{history.UtilizAmount}}</td>
+    <td class="table-row-data">{{history.GuarAmount}}</td>
+    <td class="table-row-data">{{history.Status|default_if_none:'-'}}</td>
+  </tr>
+  {% endfor %}
+</table>
+<br>
+<br>
+{% endfor %}
+{% endif %}

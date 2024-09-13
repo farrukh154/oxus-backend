@@ -1,0 +1,326 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-01 17:33+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\apps.py:7 .\models\r_credit\model.py:23
+msgid "request credit"
+msgstr "Дархост барои гирифтани қарз"
+
+#: .\models\client_decision\model.py:10
+msgid "Client decision"
+msgstr ""
+
+#: .\models\client_decision\model.py:11
+msgid "Client decisions"
+msgstr ""
+
+#: .\models\client_decision\model.py:41
+msgid "customer response/comments"
+msgstr ""
+
+#: .\models\client_decision\model.py:48
+msgid "employee comments"
+msgstr ""
+
+#: .\models\credit_purpose\model.py:8
+msgid "Credit purpose"
+msgstr ""
+
+#: .\models\credit_purpose\model.py:9
+msgid "Credit purposes"
+msgstr ""
+
+#: .\models\credit_purpose\model.py:13 .\models\economic_activity\model.py:14
+#: .\models\economic_activity_type\model.py:15 .\models\r_status\model.py:22
+#: .\models\rejection_reason\model.py:13
+msgid "name"
+msgstr ""
+
+#: .\models\credit_purpose\model.py:18
+msgid "code"
+msgstr ""
+
+#: .\models\economic_activity\model.py:9
+msgid "Economic activity"
+msgstr ""
+
+#: .\models\economic_activity\model.py:10
+msgid "Economic activities"
+msgstr ""
+
+#: .\models\economic_activity_type\model.py:10
+msgid "Economic activity type"
+msgstr ""
+
+#: .\models\economic_activity_type\model.py:11
+msgid "Economic activities types"
+msgstr ""
+
+#: .\models\r_credit\model.py:24
+msgid "request credits"
+msgstr "Дархост барои гирифтани қарзхо"
+
+#: .\models\r_credit\model.py:29
+msgid "credit account"
+msgstr "ҳисоби кредитӣ"
+
+#: .\models\r_credit\model.py:38 .\models\r_credit\serializer.py:11
+msgid "status"
+msgstr "ҳолат"
+
+#: .\models\r_credit\model.py:41
+msgid "status change date"
+msgstr "санаи тағир додани ҳолат"
+
+#: .\models\r_credit\model.py:49 .\models\r_credit\serializer.py:49
+msgid "status change by"
+msgstr "тағир додани ҳолат аз ҷониби"
+
+#: .\models\r_credit\model.py:52 .\models\r_credit\serializer.py:15
+msgid "branch"
+msgstr "филиал"
+
+#: .\models\r_credit\model.py:54
+msgid "family number"
+msgstr "рақами оила"
+
+#: .\models\r_credit\model.py:56
+msgid "family number has income"
+msgstr "шумораи оила даромад дорад"
+
+#: .\models\r_credit\model.py:60
+msgid "current debt"
+msgstr "қарзи ҷорӣ"
+
+#: .\models\r_credit\model.py:66
+msgid "current debt name"
+msgstr "номи қарзи ҷорӣ"
+
+#: .\models\r_credit\model.py:70
+msgid "acted"
+msgstr "acted"
+
+#: .\models\r_credit\model.py:76
+msgid "number of full-time employees?"
+msgstr "шумораи кормандони пурравақт?"
+
+#: .\models\r_credit\model.py:78
+msgid "creation of new jobs"
+msgstr "таъсиси ҷойҳои нави корӣ"
+
+#: .\models\r_credit\model.py:82
+msgid "source of information"
+msgstr "манбаи иттилоот"
+
+#: .\models\r_credit\model.py:102 .\models\r_credit\serializer.py:37
+msgid "economic activity"
+msgstr "фаъолияти иқтисодӣ"
+
+#: .\models\r_credit\model.py:109 .\models\r_credit\serializer.py:41
+msgid "economic activity type"
+msgstr "намуди фаъолияти иқтисодӣ"
+
+#: .\models\r_credit\model.py:112
+msgid "work experience"
+msgstr "таҷрибаи корӣ"
+
+#: .\models\r_credit\model.py:114
+msgid "request amount"
+msgstr "маблағи дархост"
+
+#: .\models\r_credit\model.py:121 .\models\r_credit\serializer.py:19
+msgid "currency"
+msgstr "асъор"
+
+#: .\models\r_credit\model.py:126
+msgid "request installment"
+msgstr "талаб кардани пардохт"
+
+#: .\models\r_credit\model.py:133 .\models\r_credit\serializer.py:45
+msgid "credit purpose"
+msgstr "мақсади қарз"
+
+#: .\models\r_credit\model.py:136
+msgid "request grace period"
+msgstr "дархости давраи имтиёзнок"
+
+#: .\models\r_credit\model.py:140
+msgid "investment sector"
+msgstr "бахши сармоягузорӣ"
+
+#: .\models\r_credit\model.py:156
+msgid "address of location of activity"
+msgstr "суроғаи маҳалли ҷойгиршавии фаъолият"
+
+#: .\models\r_credit\model.py:163
+msgid "education"
+msgstr "маориф"
+
+#: .\models\r_credit\model.py:175
+msgid "education info"
+msgstr "маълумот оид ба маориф"
+
+#: .\models\r_credit\model.py:180
+msgid "monthly income"
+msgstr "даромади моҳона"
+
+#: .\models\r_credit\model.py:182
+msgid "monthly income info"
+msgstr "маълумот дар бораи даромади моҳона"
+
+#: .\models\r_credit\model.py:186
+msgid "monthly household expenses"
+msgstr "харочоти хармохаи хочагй"
+
+#: .\models\r_credit\model.py:190
+msgid "monthly household expenses info"
+msgstr "маълумот дар бораи хароҷоти ҳармоҳаи хонавода"
+
+#: .\models\r_credit\model.py:196
+msgid "monthly payment loans"
+msgstr "қарзҳои ҳармоҳа"
+
+#: .\models\r_credit\model.py:200
+msgid "monthly payment loans info"
+msgstr "Маълумот дар бораи пардохти ҳармоҳаи қарз"
+
+#: .\models\r_credit\model.py:206
+msgid "monthly profit info"
+msgstr "Маълумот дар бораи фоидаи моҳона"
+
+#: .\models\r_credit\model.py:210
+msgid "total business assets"
+msgstr "дороиҳои умумии тиҷоратӣ"
+
+#: .\models\r_credit\model.py:214
+msgid "total business assets info"
+msgstr "маълумоти умумии дороиҳои тиҷоратӣ"
+
+#: .\models\r_credit\model.py:219
+msgid "client capital"
+msgstr "сармояи муштарӣ"
+
+#: .\models\r_credit\model.py:221
+msgid "client capital info"
+msgstr "Маълумот дар бораи сармояи муштарӣ"
+
+#: .\models\r_credit\model.py:225
+msgid "total household assets"
+msgstr "умумии дороиҳои хонавода"
+
+#: .\models\r_credit\model.py:229
+msgid "total household assets info"
+msgstr "маълумоти умумии дороиҳои хонавода"
+
+#: .\models\r_credit\model.py:234
+msgid "approve amount"
+msgstr "маблағи тасдиқ"
+
+#: .\models\r_credit\model.py:237
+msgid "approve installment"
+msgstr "пардохтро тасдик кунед"
+
+#: .\models\r_credit\model.py:245 .\models\r_credit\serializer.py:23
+msgid "approve currency"
+msgstr "асъори тасдик карда"
+
+#: .\models\r_credit\model.py:250
+msgid "approve interest"
+msgstr "манфиатдорро тасдиқ мекунанд"
+
+#: .\models\r_credit\model.py:255
+msgid "approve grace period"
+msgstr "мухлати имтиёзро тасдик намояд"
+
+#: .\models\r_credit\model.py:259
+msgid "approve issue fee"
+msgstr "хакки эмиссияро тасдик намояд"
+
+#: .\models\r_credit\model.py:268 .\models\r_credit\serializer.py:53
+msgid "credit product"
+msgstr "маҳсулоти кредитӣ"
+
+#: .\models\r_credit\model.py:273
+msgid "rating internal"
+msgstr "рейтинги дохилӣ"
+
+#: .\models\r_credit\model.py:280
+msgid "rating external"
+msgstr "рейтинги беруна"
+
+#: .\models\r_credit\model.py:288
+msgid "approve condition"
+msgstr "шартро тасдиқ кунед"
+
+#: .\models\r_credit\model.py:304 .\models\r_credit\serializer.py:57
+#: .\models\rejection_reason\model.py:8
+msgid "rejection reason"
+msgstr "сабаби рад"
+
+#: .\models\r_credit\model.py:313 .\models\r_credit\serializer.py:61
+msgid "client rejection reason"
+msgstr "сабаби рад кардани муштарӣ"
+
+#: .\models\r_credit\model.py:318
+msgid "postponed info"
+msgstr "маълумоти ба таъхир гузошташуда"
+
+#: .\models\r_credit\model.py:324 .\models\r_credit\serializer.py:65
+msgid "decision client"
+msgstr "муштарии қарор"
+
+#: .\models\r_credit\model.py:328 .\models\r_credit\serializer.py:70
+msgid "customer"
+msgstr "мизоч"
+
+#: .\models\r_credit\model.py:337 .\models\r_credit\serializer.py:75
+msgid "underwriter status"
+msgstr "ҳолати андеррайтер"
+
+#: .\models\r_credit\model.py:340
+msgid "underwriter status change date"
+msgstr "санаи тағир додани ҳолати андеррайтер"
+
+#: .\models\r_credit\model.py:348 .\models\r_credit\serializer.py:79
+msgid "underwriter status change by"
+msgstr "тағир додани ҳолати андеррайтер аз ҷониби"
+
+#: .\models\r_credit\model.py:353
+msgid "result"
+msgstr "натиҷа"
+
+#: .\models\r_credit\serializer.py:27
+msgid "created by"
+msgstr ""
+
+#: .\models\r_credit\serializer.py:32
+msgid "updated by"
+msgstr ""
+
+#: .\models\r_status\model.py:17
+msgid "request status"
+msgstr "ҳолати дархост"
+
+#: .\models\r_status\model.py:18
+msgid "request statuses"
+msgstr "ҳолати дархостхо"
+
+#: .\models\rejection_reason\model.py:9
+msgid "rejection reasons"
+msgstr "сабабҳои рад"

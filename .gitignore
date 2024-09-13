@@ -1,0 +1,16 @@
+oxus/settings_local.py
+temp/
+**/sphinx_index/
+/venv/
+venv/
+*.mo
+__pycache__
+*.pyc
+**logfile
+media/
+/static/
+*.sqlite3
+*.docx#
+*.docx.bak~
+*.odt#
+.vscode/
